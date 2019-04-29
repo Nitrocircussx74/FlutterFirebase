@@ -26,6 +26,33 @@ class _AuthenState extends State<Authen> {
         ));
   }
 
+// ---------------
+  Widget button() {
+    return Container(
+        margin: EdgeInsets.only(
+          top: 15.0,
+          left: 30.0,
+        ),
+        child: Row(
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(
+                top: 15.0,
+                left: 90.0,
+              ),
+              child: singInbutton(),
+            ),
+            Container(
+              margin: EdgeInsets.only(
+                top: 15.0,
+                left: 30.0,
+              ),
+              child: singUpbutton(),
+            ),
+          ],
+        ));
+  }
+
 // ----------------------
   Widget singInbutton() {
     return Container(
@@ -125,29 +152,7 @@ class _AuthenState extends State<Authen> {
                   margin: EdgeInsets.only(top: 15.0), child: showContent()),
               emailTextField(),
               passTextField(),
-              Container(
-                  margin: EdgeInsets.only(
-                    top: 15.0,
-                    left: 30.0,
-                  ),
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(
-                          top: 15.0,
-                          left: 80.0,
-                        ),
-                        child: singInbutton(),
-                      ),
-                      Container(
-                        margin: EdgeInsets.only(
-                          top: 15.0,
-                          left: 30.0,
-                        ),
-                        child: singUpbutton(),
-                      ),
-                    ],
-                  ))
+              button()
             ],
           ),
         ));
