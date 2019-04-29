@@ -6,9 +6,47 @@ class Authen extends StatefulWidget {
 }
 
 class _AuthenState extends State<Authen> {
+  // -------------------------------------
+  Widget showLogo() {
+    return Container(
+        width: 200.0, height: 200.0, child: Image.asset('images/giphy.webp'));
+  }
+
 // ---------------------------
   Widget showName() {
-    return Text('Fluter');
+    return Text(
+      'Fluter',
+      style: TextStyle(
+        fontSize: 32,
+        color: Colors.black87,
+      ),
+    );
+  }
+
+// ----------------------------r
+  Widget showContent() {
+    return Text(
+      'is real',
+      style: TextStyle(
+        fontFamily: 'GloriaHallelujah',
+        fontSize: 32,
+        // fontWeight: FontWeight.bold,
+        color: Colors.black87,
+      ),
+    );
+  }
+
+// -----------
+  Widget showfooter() {
+    return Text(
+      'real',
+      style: TextStyle(
+        fontFamily: 'GloriaHallelujah',
+        fontSize: 32,
+        // fontWeight: FontWeight.bold,
+        color: Colors.black87,
+      ),
+    );
   }
 
 // -------------------------------------------
@@ -16,22 +54,19 @@ class _AuthenState extends State<Authen> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: Container(
-      padding: EdgeInsets.only(top: 30.0),
-      alignment: Alignment(0, -1),
-      child: showName(),
-    ));
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.blue, Colors.red],
+                    begin: Alignment(-1, -1))),
+            padding: EdgeInsets.only(top: 30.0),
+            alignment: Alignment(0, -1),
+            child: Column(
+              children: <Widget>[
+                showLogo(),
+                Container(
+                    margin: EdgeInsets.only(top: 15.0), child: showContent()),
+              ],
+            )));
 // ----------------------
-    // return Container(
-    //   decoration: BoxDecoration(color: Colors.white),
-    //   child: Center(
-    //     child: Text(
-    //       'This is  World',
-    //       style: TextStyle(
-    //         fontSize: 32,
-    //         color: Colors.black87,
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
