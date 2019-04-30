@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './register.dart';
 
 class Authen extends StatefulWidget {
   @override
@@ -70,7 +71,12 @@ class _AuthenState extends State<Authen> {
             color: Colors.blue,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30.0)),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Register()),
+              );
+            },
             child: Text("Sing up")));
   }
 
@@ -122,17 +128,17 @@ class _AuthenState extends State<Authen> {
   }
 
 // -----------
-  Widget showfooter() {
-    return Text(
-      'real',
-      style: TextStyle(
-        fontFamily: 'GloriaHallelujah',
-        fontSize: 32,
-        // fontWeight: FontWeight.bold,
-        color: Colors.black87,
-      ),
-    );
-  }
+  // Widget showfooter() {
+  //   return Text(
+  //     'real',
+  //     style: TextStyle(
+  //       fontFamily: 'GloriaHallelujah',
+  //       fontSize: 32,
+  //       // fontWeight: FontWeight.bold,
+  //       color: Colors.black87,
+  //     ),
+  //   );
+  // }
 
 // -------------------------------------------
   @override
