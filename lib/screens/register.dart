@@ -8,10 +8,9 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   // Explicit
   final formKey = GlobalKey<FormState>();
+  String name, email, password;
 
   bool _obscureText = true;
-
-  String _password;
 
 // --------------
   Widget nameTextField() {
@@ -33,6 +32,7 @@ class _RegisterState extends State<Register> {
               return 'Please Fill Name';
             }
           },
+          onSaved: (value) => name = value,
         ));
   }
 
@@ -58,6 +58,7 @@ class _RegisterState extends State<Register> {
               return 'Please Fill Email Format';
             }
           },
+          onSaved: (value) => email = value,
         ));
   }
 
@@ -72,11 +73,12 @@ class _RegisterState extends State<Register> {
                 // borderRadius: BorderRadius.circular(20.0),
                 borderSide: BorderSide(width: 1.0)),
             labelText: 'Password:',
+            hintText: 'More 6 Charactor',
             icon: const Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: const Icon(Icons.lock))),
         validator: (val) => val.length < 6 ? 'Password too short.' : null,
-        onSaved: (val) => _password = val,
+        onSaved: (val) => password = val,
         obscureText: _obscureText,
       ),
     );
@@ -111,8 +113,10 @@ class _RegisterState extends State<Register> {
       icon: Icon(Icons.cloud_upload),
       tooltip: 'Upload',
       onPressed: () {
-        print('eiei');
-        if (formKey.currentState.validate()) {}
+        if (formKey.currentState.validate()) {
+          formKey.currentState.save();
+          print('name = $name, email = $email , password = $password');
+        }
       },
     );
     // Container(
