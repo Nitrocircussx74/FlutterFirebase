@@ -39,45 +39,46 @@ class _AuthenState extends State<Authen> {
             Container(
               margin: EdgeInsets.only(
                 top: 15.0,
-                left: 90.0,
+                left: 60.0,
               ),
-              child: singInbutton(),
+              child: singInbutton(context),
             ),
             Container(
               margin: EdgeInsets.only(
                 top: 15.0,
-                left: 30.0,
+                left: 25.0,
               ),
-              child: singUpbutton(),
+              child: singUpbutton(context),
             ),
           ],
         ));
   }
 
 // ----------------------
-  Widget singInbutton() {
+  Widget singInbutton(BuildContext context) {
     return Container(
-        child: RaisedButton(
-            color: Colors.green,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)),
-            onPressed: () {},
-            child: Text("Sing In")));
+        child: RaisedButton.icon(
+      icon: Icon(Icons.android),
+      label: Text("Sing up"),
+      color: Colors.green,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      onPressed: () {},
+    ));
   }
 
-  Widget singUpbutton() {
+  Widget singUpbutton(BuildContext context) {
     return Container(
-        child: RaisedButton(
-            color: Colors.blue,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(30.0)),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => Register()),
-              );
-            },
-            child: Text("Sing up")));
+        child: RaisedButton.icon(
+      icon: Icon(Icons.android),
+      label: Text("Sing up"),
+      color: Colors.blue,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+      onPressed: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(builder: (BuildContext context) => Register()),
+        );
+      },
+    ));
   }
 
   // --------------

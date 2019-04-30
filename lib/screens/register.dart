@@ -6,6 +6,9 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  // Explicit
+  final formKey = GlobalKey<FormState>();
+
   bool _obscureText = true;
 
   String _password;
@@ -25,6 +28,11 @@ class _RegisterState extends State<Register> {
               icon: const Padding(
                   padding: const EdgeInsets.only(top: 15.0),
                   child: const Icon(Icons.face))),
+          validator: (String value) {
+            if (value.length == 0) {
+              return 'Please Fill Name';
+            }
+          },
         ));
   }
 
@@ -43,6 +51,13 @@ class _RegisterState extends State<Register> {
               icon: const Padding(
                   padding: const EdgeInsets.only(top: 15.0),
                   child: const Icon(Icons.local_post_office))),
+          validator: (String value) {
+            if (value.length == 0) {
+              return 'Please Fill Email';
+            } else if (!((value.contains('@')) && (value.contains(".")))) {
+              return 'Please Fill Email Format';
+            }
+          },
         ));
   }
 
@@ -84,78 +99,67 @@ class _RegisterState extends State<Register> {
             child: Text("Sing Up")));
   }
 
-  // Widget showLogo() {
-  //   return Container(
-  //       width: 200.0, height: 200.0, child: Image.asset('images/giphy.webp'));
-  // }
+// -------------------------------------------
+  Widget showLogo() {
+    return Container(
+        width: 100.0, height: 10.0, child: Image.asset('images/giphy.webp'));
+  }
 
-// ---------------------------
-  // Widget showName() {
-  //   return Text(
-  //     'Fluter',
-  //     style: TextStyle(
-  //       fontSize: 32,
-  //       color: Colors.black87,
-  //     ),
-  //   );
-  // }
+// -------------------------------------------
+  Widget upLoadButton() {
+    return IconButton(
+      icon: Icon(Icons.cloud_upload),
+      tooltip: 'Upload',
+      onPressed: () {
+        print('eiei');
+        if (formKey.currentState.validate()) {}
+      },
+    );
+    // Container(
+    //     width: 200.0, height: 200.0, child: Image.asset('images/giphy.webp'));
+  }
 
-// ----------------------------r
-  // Widget showContent() {
-  //   return Text(
-  //     'is real',
-  //     style: TextStyle(
-  //       fontFamily: 'GloriaHallelujah',
-  //       fontSize: 32,
-  //       // fontWeight: FontWeight.bold,
-  //       color: Colors.black87,
-  //     ),
-  //   );
-  // }
-
-// -----------
-  // Widget showfooter() {
-  //   return Text(
-  //     'real',
-  //     style: TextStyle(
-  //       fontFamily: 'GloriaHallelujah',
-  //       fontSize: 32,
-  //       // fontWeight: FontWeight.bold,
-  //       color: Colors.black87,
-  //     ),
-  //   );
-  // }
-
+// -------------------------------------------
 // -------------------------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "register",
-          style: TextStyle(
-            fontFamily: 'GloriaHallelujah',
-            fontSize: 26,
-            // fontWeight: FontWeight.bold,
-            color: Colors.black87,
+        resizeToAvoidBottomPadding: false,
+        appBar: AppBar(
+          backgroundColor: Colors.blue[900],
+          title: Text(
+            "register",
+            style: TextStyle(
+              fontFamily: 'GloriaHallelujah',
+              fontSize: 26,
+              // fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
           ),
+          actions: <Widget>[showLogo(), upLoadButton()],
         ),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-            gradient: LinearGradient(
-                colors: [Colors.blue, Colors.red], begin: Alignment(-1, -1))),
-        padding: EdgeInsets.all(90.0),
-        child: Column(
-          children: <Widget>[
-            nameTextField(),
-            emailTextField(),
-            passTextField(),
-            singUpbutton()
-          ],
-        ),
-      ),
-    );
+        body: Form(
+          key: formKey,
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: RadialGradient(
+                    colors: [Colors.white, Colors.blue],
+                    radius: 2.0,
+                    center: Alignment(0, 0))
+                // LinearGradient(
+                //     colors: [Colors.blue, Colors.white], begin: Alignment(-1, -1))
+
+                ),
+            padding: EdgeInsets.all(90.0),
+            child: Column(
+              children: <Widget>[
+                nameTextField(),
+                emailTextField(),
+                passTextField()
+              ],
+            ),
+          ),
+        ));
 // ----------------------
   }
 }
