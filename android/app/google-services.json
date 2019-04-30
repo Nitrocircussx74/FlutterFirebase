@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "303187931003",
+    "firebase_url": "https://masterx3-a4ba5.firebaseio.com",
+    "project_id": "masterx3-a4ba5",
+    "storage_bucket": "masterx3-a4ba5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:303187931003:android:fbf6b1f43d328f27",
+        "android_client_info": {
+          "package_name": "earstest.masterx3"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "303187931003-f3asabe0c4eeofekk93fg6vgdipsuvqu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "earstest.masterx3",
+            "certificate_hash": "e443be2614111e0c4f7850da2587cf02105319f5"
+          }
+        },
+        {
+          "client_id": "303187931003-9nkkai2a7kjgc9vtbposlvvpmjsb56lp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAHJbdARedZ7uO0_utQHpRm01U6nDywMPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "303187931003-9nkkai2a7kjgc9vtbposlvvpmjsb56lp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
