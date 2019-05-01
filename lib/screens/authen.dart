@@ -101,7 +101,7 @@ class _AuthenState extends State<Authen> {
   // -------------------------------------
   Widget showLogo() {
     return Container(
-        width: 200.0, height: 200.0, child: Image.asset('images/giphy.webp'));
+        width: 200.0, height: 200.0, child: Image.asset('images/giphy.gif'));
   }
 
 // ---------------------------

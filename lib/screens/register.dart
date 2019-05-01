@@ -11,7 +11,12 @@ class _RegisterState extends State<Register> {
   final formKey = GlobalKey<FormState>();
   String name, email, password;
 
+// For Firebase
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+// For SnackBar
+
+  final snackBarKey = GlobalKey<ScaffoldState>();
 
   bool _obscureText = true;
 
@@ -119,6 +124,7 @@ class _RegisterState extends State<Register> {
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
           print('name = $name, email = $email , password = $password');
+          passValueToFireabase();
         }
       },
     );
@@ -128,9 +134,37 @@ class _RegisterState extends State<Register> {
 
 // -------------------------------------------
 // -------------------------------------------
+  void passValueToFireabase() async {
+    FirebaseUser firebaseUser = await firebaseAuth
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((res) {
+      print('save');
+    }).catchError((e) {
+      String errorString = e.message;
+      print('Error!!!!!!!!!!!!!!!!!====> $errorString');
+      showSnackBar(errorString);
+    });
+  }
+
+// -------------------------------------------
+
+  void showSnackBar(String message) {
+    SnackBar snackBar = SnackBar(
+      duration: Duration(seconds: 10),
+      content: Text(message),
+      action: SnackBarAction(
+        label: 'Close',
+        onPressed: () {},
+      ),
+    );
+    snackBarKey.currentState.showSnackBar(snackBar);
+  }
+
+// -------------------------------------------
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: snackBarKey,
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           backgroundColor: Colors.blue[900],
