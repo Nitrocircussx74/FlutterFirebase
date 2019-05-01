@@ -116,7 +116,7 @@ class _RegisterState extends State<Register> {
   }
 
 // -------------------------------------------
-  Widget upLoadButton() {
+  Widget upLoadButton(BuildContext context) {
     return IconButton(
       icon: Icon(Icons.cloud_upload),
       tooltip: 'Upload',
@@ -124,7 +124,7 @@ class _RegisterState extends State<Register> {
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
           print('name = $name, email = $email , password = $password');
-          passValueToFireabase();
+          passValueToFireabase(context);
         }
       },
     );
@@ -134,11 +134,12 @@ class _RegisterState extends State<Register> {
 
 // -------------------------------------------
 // -------------------------------------------
-  void passValueToFireabase() async {
+  void passValueToFireabase(BuildContext context) async {
     FirebaseUser firebaseUser = await firebaseAuth
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((res) {
       print('save');
+      Navigator.pop(context);
     }).catchError((e) {
       String errorString = e.message;
       print('Error!!!!!!!!!!!!!!!!!====> $errorString');
@@ -177,7 +178,7 @@ class _RegisterState extends State<Register> {
               color: Colors.black87,
             ),
           ),
-          actions: <Widget>[showLogo(), upLoadButton()],
+          actions: <Widget>[showLogo(), upLoadButton(context)],
         ),
         body: Form(
           key: formKey,
