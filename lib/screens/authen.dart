@@ -1,5 +1,7 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import './register.dart';
+import './service.dart';
 
 class Authen extends StatefulWidget {
   @override
@@ -18,6 +20,9 @@ class _AuthenState extends State<Authen> {
   String _password;
   // Toggles the password show status
 
+// For Firebase
+  FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
 // For SnackBar
 
   final barKey = GlobalKey<ScaffoldState>();
@@ -25,6 +30,29 @@ class _AuthenState extends State<Authen> {
 // -------------------------- For Form
 
   final form = GlobalKey<FormState>();
+  // ---------------
+  @override
+  void initState() {
+    super.initState();
+    print('Work');
+    checkStatus(context);
+  }
+
+// --------------
+  Future checkStatus(BuildContext context) async {
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    if (firebaseUser != null) {
+      passToService(context);
+    }
+  }
+
+// -------------
+  void passToService(BuildContext context) {
+    var serviceRoute =
+        MaterialPageRoute(builder: (BuildContext context) => Service());
+    Navigator.of(context)
+        .pushAndRemoveUntil(serviceRoute, (Route<dynamic> route) => false);
+  }
 
 // --------------
   Widget emailTextField() {
@@ -89,6 +117,7 @@ class _AuthenState extends State<Authen> {
         if (form.currentState.validate()) {
           form.currentState.save();
           print('email = $email , password = $password');
+          check(context);
         }
       },
     ));
@@ -160,18 +189,23 @@ class _AuthenState extends State<Authen> {
     );
   }
 
-// -----------
-  // Widget showfooter() {
-  //   return Text(
-  //     'real',
-  //     style: TextStyle(
-  //       fontFamily: 'GloriaHallelujah',
-  //       fontSize: 32,
-  //       // fontWeight: FontWeight.bold,
-  //       color: Colors.black87,
-  //     ),
-  //   );
-  // }
+// ----------- check
+  void check(BuildContext context) async {
+    FirebaseUser firebaseUser = await firebaseAuth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((res) {
+      print('log in ');
+      //  Route With Arrow Back
+      var ServiceRoute =
+          MaterialPageRoute(builder: (BuildContext context) => Service());
+      Navigator.of(context)
+          .pushAndRemoveUntil(ServiceRoute, (Route<dynamic> route) => false);
+    }).catchError((e) {
+      String errorString = e.message;
+      print('Error!!!!!!!!!!!!!!!!!====> $errorString');
+      showSnackBar(errorString);
+    });
+  }
 
 // -------------------------------------------
   @override

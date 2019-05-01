@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -13,6 +14,10 @@ class _RegisterState extends State<Register> {
 
 // For Firebase
   final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  // Friebase database
+
+  final FirebaseDatabase firebaseDatabase = FirebaseDatabase.instance;
 
 // For SnackBar
 
@@ -139,12 +144,28 @@ class _RegisterState extends State<Register> {
         .createUserWithEmailAndPassword(email: email, password: password)
         .then((res) {
       print('save');
-      Navigator.pop(context);
+      addValueToDb(context);
     }).catchError((e) {
       String errorString = e.message;
       print('Error!!!!!!!!!!!!!!!!!====> $errorString');
       showSnackBar(errorString);
     });
+  }
+
+// --------------------------------functions add to firebase
+  void addValueToDb(BuildContext context) async {
+    FirebaseUser firebaseUser = await firebaseAuth.currentUser();
+    String Uid = firebaseUser.uid.toString();
+    print('$Uid');
+
+    // ---------Create Map
+
+    Map<String, String> map = Map();
+    map['Name'] = name;
+    // ------ updata  to firebase
+    await firebaseDatabase.reference().child(Uid).set(map);
+
+    Navigator.pop(context);
   }
 
 // -------------------------------------------
