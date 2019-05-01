@@ -9,8 +9,22 @@ class Authen extends StatefulWidget {
 class _AuthenState extends State<Authen> {
   bool _obscureText = true;
 
+  String email, password;
+
+  String tittle = "Please Fill Email ";
+  String titleEmail = "Please Fill Email Format";
+  String titlePass = "Password too short ";
+
   String _password;
   // Toggles the password show status
+
+// For SnackBar
+
+  final barKey = GlobalKey<ScaffoldState>();
+
+// -------------------------- For Form
+
+  final form = GlobalKey<FormState>();
 
 // --------------
   Widget emailTextField() {
@@ -24,6 +38,14 @@ class _AuthenState extends State<Authen> {
               icon: const Padding(
                   padding: const EdgeInsets.only(top: 15.0),
                   child: const Icon(Icons.local_post_office))),
+          validator: (String value) {
+            if (value.length == 0) {
+              return tittle;
+            } else if (!((value.contains('@')) && (value.contains(".")))) {
+              return titleEmail;
+            }
+          },
+          onSaved: (value) => email = value,
         ));
   }
 
@@ -58,18 +80,26 @@ class _AuthenState extends State<Authen> {
   Widget singInbutton(BuildContext context) {
     return Container(
         child: RaisedButton.icon(
-      icon: Icon(Icons.android),
-      label: Text("Sing up"),
+      icon: Icon(Icons.beenhere),
+      label: Text("Sing In"),
       color: Colors.green,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
-      onPressed: () {},
+      onPressed: () {
+        print("click");
+        if (form.currentState.validate()) {
+          form.currentState.save();
+          print('email = $email , password = $password');
+        }
+      },
     ));
   }
+// ------------------------------------
 
+// ---------------------------------------
   Widget singUpbutton(BuildContext context) {
     return Container(
         child: RaisedButton.icon(
-      icon: Icon(Icons.android),
+      icon: Icon(Icons.account_box),
       label: Text("Sing up"),
       color: Colors.blue,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
@@ -91,8 +121,8 @@ class _AuthenState extends State<Authen> {
             icon: const Padding(
                 padding: const EdgeInsets.only(top: 15.0),
                 child: const Icon(Icons.lock))),
-        validator: (val) => val.length < 6 ? 'Password too short.' : null,
-        onSaved: (val) => _password = val,
+        validator: (val) => val.length < 6 ? titlePass : null,
+        onSaved: (val) => password = val,
         obscureText: _obscureText,
       ),
     );
@@ -101,18 +131,20 @@ class _AuthenState extends State<Authen> {
   // -------------------------------------
   Widget showLogo() {
     return Container(
-        width: 200.0, height: 200.0, child: Image.asset('images/giphy.gif'));
+        width: 200.0, height: 200.0, child: Image.asset('images/giphy.webp'));
   }
 
 // ---------------------------
-  Widget showName() {
-    return Text(
-      'Fluter',
-      style: TextStyle(
-        fontSize: 32,
-        color: Colors.black87,
+  void showSnackBar(String message) {
+    SnackBar snackBar = SnackBar(
+      duration: Duration(seconds: 10),
+      content: Text(message),
+      action: SnackBarAction(
+        label: 'Close',
+        onPressed: () {},
       ),
     );
+    barKey.currentState.showSnackBar(snackBar);
   }
 
 // ----------------------------r
@@ -145,22 +177,27 @@ class _AuthenState extends State<Authen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: barKey,
         resizeToAvoidBottomPadding: false,
-        body: Container(
-          decoration: BoxDecoration(
-              gradient: LinearGradient(
-                  colors: [Colors.blue, Colors.red], begin: Alignment(-1, -1))),
-          padding: EdgeInsets.only(top: 30.0),
-          alignment: Alignment(0, -1),
-          child: Column(
-            children: <Widget>[
-              showLogo(),
-              Container(
-                  margin: EdgeInsets.only(top: 15.0), child: showContent()),
-              emailTextField(),
-              passTextField(),
-              button()
-            ],
+        body: Form(
+          key: form,
+          child: Container(
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+                    colors: [Colors.blue, Colors.white],
+                    begin: Alignment(-1, -1))),
+            padding: EdgeInsets.only(top: 30.0),
+            alignment: Alignment(0, -1),
+            child: Column(
+              children: <Widget>[
+                showLogo(),
+                Container(
+                    margin: EdgeInsets.only(top: 15.0), child: showContent()),
+                emailTextField(),
+                passTextField(),
+                button()
+              ],
+            ),
           ),
         ));
 // ----------------------
